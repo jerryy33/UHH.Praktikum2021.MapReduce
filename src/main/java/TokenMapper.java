@@ -1,21 +1,39 @@
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
-import java.util.StringTokenizer;
+import java.util.LinkedList;
 
 // Mapper <Input Key, Input Value, Output Key, Output Value>
 public class TokenMapper extends Mapper<Object, Text, Text, IntWritable> {
 
     private final static IntWritable one = new IntWritable(1);
-    private Text word = new Text();
+    private final Text word = new Text();
+    private LinkedList<String> hashtagCount= new LinkedList<>();
 
     public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-        StringTokenizer itr = new StringTokenizer(value.toString());
-        while (itr.hasMoreTokens()) {
-            word.set(itr.nextToken());
-            context.write(word, one);
+
+        Parser parser = new Parser();
+            try
+            {
+                hashtagCount = parser.getHashtags(value.toString());
+            }
+            catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+            if(hashtagCount.size() > 0)
+            {
+                for (String hashtag : hashtagCount)
+                {
+                    if (hashtag != null)
+                    {
+                        word.set(hashtag);
+                        context.write(word, one);
+                    }
+                }
+            }
         }
-    }
 }

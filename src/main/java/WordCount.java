@@ -1,5 +1,6 @@
-import java.io.IOException;
+import java.io.*;
 import java.util.StringTokenizer;
+import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
