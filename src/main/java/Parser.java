@@ -3,6 +3,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.util.LinkedList;
+import java.util.StringTokenizer;
 
 /*
 * Die Klasse parst einen Tweet, um ihn dann für das Map-Reduce zu nutzen.
@@ -38,5 +39,22 @@ public class Parser {
             }
         }
         return hashtagsList;
+    }
+    public LinkedList<String> getText(String tweet) throws ParseException
+    {
+        LinkedList<String> textList = new LinkedList<>();
+        JSONParser jsonParser = new JSONParser();
+        JSONObject obj = (JSONObject) jsonParser.parse(tweet);
+
+        if (obj.containsKey("created_at"))
+        {
+            JSONObject t = (JSONObject) obj.get("text");
+            StringTokenizer itr = new StringTokenizer(t.toString());
+            while (itr.hasMoreTokens())
+            {
+                textList.add(itr.nextToken());
+            }
+        }
+        return textList;
     }
 }
