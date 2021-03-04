@@ -12,7 +12,10 @@ public class SumReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
         for (IntWritable val : values) {
             sum += val.get();
         }
-        result.set(sum);
-        context.write(key, result);
+        if(sum > 10)
+        {
+            result.set(sum);
+            context.write(key, result);
+        }
     }
 }
