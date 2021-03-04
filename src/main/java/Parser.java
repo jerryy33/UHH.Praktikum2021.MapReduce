@@ -61,14 +61,6 @@ public class Parser {
 
     private String cleanText(String t)
     {
-        StringTokenizer itr = new StringTokenizer(t);
-        while (itr.hasMoreTokens())
-        {
-            if(itr.nextToken().contains("#"))
-            {
-                t = t.replace(itr.nextToken(), "");
-            }
-        }
-        return t;
+        return t.replaceAll("#\\p{IsAlphabetic}+", "");
     }
 }
