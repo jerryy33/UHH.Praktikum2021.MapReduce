@@ -48,13 +48,27 @@ public class Parser {
 
         if (obj.containsKey("created_at"))
         {
-            JSONObject t = (JSONObject) obj.get("text");
-            StringTokenizer itr = new StringTokenizer(t.toString());
+            String t = (String) obj.get("text");
+            String cleanText = cleanText(t);
+            StringTokenizer itr = new StringTokenizer(cleanText);
             while (itr.hasMoreTokens())
             {
                 textList.add(itr.nextToken());
             }
         }
         return textList;
+    }
+
+    private String cleanText(String t)
+    {
+        StringTokenizer itr = new StringTokenizer(t);
+        while (itr.hasMoreTokens())
+        {
+            if(itr.nextToken().contains("#"))
+            {
+                t = t.replace(itr.nextToken(), "");
+            }
+        }
+        return t;
     }
 }
