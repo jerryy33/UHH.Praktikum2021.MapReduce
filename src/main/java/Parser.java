@@ -1,31 +1,37 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Locale;
-import java.util.StringTokenizer;
-import java.util.regex.Pattern;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 /*
 * Die Klasse parst einen Tweet, um ihn dann für das Map-Reduce zu nutzen.
 * */
 public class Parser {
+
     private String location = "No Location";
+    private List<String> stopwords;
 
-    private ArrayList<String> stopwords = new ArrayList<String>();
-
-
-    public String getLocation(String tweet) throws ParseException
+    //Datumsfunktion (Vielleicht entfernen)
+    public String getDate(JSONObject tweet) throws ParseException
     {
-        JSONParser jsonParser = new JSONParser();
-        JSONObject obj = (JSONObject) jsonParser.parse(tweet);
-        JSONObject user = (JSONObject) obj.get("user");
+        String date = (String) tweet.get("created_at");
+        String [] einheiten = date.split("\\s+");
+
+        return einheiten[1] + einheiten[2] +einheiten[5];
+    }
+    //Locationfunktion (Vielleicht entfernen)
+    public String getLocation(JSONObject tweet) throws ParseException
+    {
+        JSONObject user = (JSONObject) tweet.get("user");
     try{
             location = (String) user.get("location");
         }
@@ -40,75 +46,59 @@ public class Parser {
     * Extrahiert die Hashtags aus dem JSON File.
     * @param JSONObject Ein kompletter Tweet
     * */
-    public LinkedList<String> getHashtags (String tweet) throws ParseException
+    public LinkedList<String> getHashtags (JSONObject tweet) throws ParseException
     {
         LinkedList<String> hashtagsList = new LinkedList<>();
-        JSONParser jsonParser = new JSONParser();
-        JSONObject obj = (JSONObject) jsonParser.parse(tweet);
 
-        if(obj.containsKey("created_at"))
+        JSONObject ent = (JSONObject) tweet.get("entities");
+        JSONArray hash = (JSONArray) ent.get("hashtags");
+
+        if (!hash.isEmpty())
         {
-            JSONObject ent = (JSONObject) obj.get("entities");
-            JSONArray hash = (JSONArray) ent.get("hashtags");
-
-            if (!hash.isEmpty())
+            for (Object o : hash)
             {
-                for (Object o : hash)
+                JSONObject text = (JSONObject) o;
+                if (text.containsKey("text"))
                 {
-                    JSONObject text = (JSONObject) o;
-                    if (text.containsKey("text"))
-                    {
-                        hashtagsList.add(text.get("text").toString());
-                    }
+                    hashtagsList.add(text.get("text").toString());
                 }
             }
         }
         return hashtagsList;
     }
-    public LinkedList<String> getText(String tweet) throws ParseException
+    public LinkedList<String> getText(JSONObject tweet) throws ParseException
     {
         LinkedList<String> textList = new LinkedList<>();
-        JSONParser jsonParser = new JSONParser();
-        JSONObject obj = (JSONObject) jsonParser.parse(tweet);
 
-        if (obj.containsKey("created_at"))
+        String t = (String) tweet.get("text");
+        String cleanText = cleanText(t.toLowerCase(Locale.ROOT));
+        StringTokenizer itr = new StringTokenizer(cleanText);
+        while (itr.hasMoreTokens())
         {
-            String t = (String) obj.get("text");
-            String cleanText = cleanText(t.toLowerCase(Locale.ROOT));
-            StringTokenizer itr = new StringTokenizer(cleanText);
-            while (itr.hasMoreTokens())
-            {
-                textList.add(itr.nextToken());
-            }
+            textList.add(itr.nextToken());
         }
-        return textList;
+    return textList;
     }
 
     private String cleanText(String t) {
-        String s = removeAllStopWords(t);
+        String s = removeAllStopWords(t.toLowerCase(Locale.ROOT));
         return s.replaceAll("#\\p{IsAlphabetic}+", "");
     }
 
-    private String removeAllStopWords(String t)
-    {//TODO Stopwörter werden nicht entfernt
-        try {
-            BufferedReader bf = new BufferedReader(new FileReader("english_stopwords"));
-            String end = null;
-            while ((end = bf.readLine()) != null) {
-                String stop = bf.readLine();
-                stopwords.add(stop);
-            }
-            bf.close();
-        }
-        catch (IOException e)
-        {
+    public String removeAllStopWords(String t)
+    {
+
+        String path = "/english_stopwords";
+        try (InputStream resource = Parser.class.getResourceAsStream(path)) {
+            stopwords = new BufferedReader(new InputStreamReader(resource,
+                                StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        for (String stop: stopwords)
-        {
-            Pattern regex = Pattern.compile("\\b"+ stop+"\\b");
-            t= t.replaceAll(String.valueOf(regex),"");
-        }
-        return t;
+
+        ArrayList<String> allWords = Stream.of(t.split(" ")).collect(Collectors.toCollection(ArrayList<String>::new));
+        stopwords.removeAll(Collections.singleton(null));
+        allWords.removeAll(stopwords);
+        return allWords.stream().collect(Collectors.joining(" "));
     }
 }
