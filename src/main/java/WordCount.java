@@ -1,3 +1,9 @@
+import Job1.SumReducer;
+import Job1.TokenMapper;
+import Job2.SumReducer1;
+import Job2.TokenMapper1;
+import Job3.SumReducer2;
+import Job3.TokenMapper2;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;

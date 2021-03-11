@@ -1,3 +1,5 @@
+package Job1;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -11,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /*
-* Die Klasse holt relavante Informationen aus einem Tweet, um ihn dann für das Map-Reduce zu nutzen.
+* Die Klasse holt relevante Informationen aus einem Tweet, um ihn dann für das Map-Reduce zu nutzen.
 * */
 public class Parser {
 
@@ -25,7 +27,11 @@ public class Parser {
     //Eine Liste in der die Spanische stopwords gespeichert werden
     private List<String> stopwords_es;
 
-
+    /*
+     * Extrahiert das Datum aus einem JSONObject
+     * @param tweet Ein kompletter Tweet als JSONObject.
+     * @return String Monat + Tag + Jahr
+     */
     public String getDate(JSONObject tweet) throws ParseException
     {
         String date = (String) tweet.get("created_at");
@@ -34,7 +40,11 @@ public class Parser {
         return einheiten[1] + einheiten[2] +einheiten[5];
     }
 
-
+    /*
+     * Extrahiert die angegebene Sprache aus dem JSONObject
+     * @param tweet Ein kompletter Tweet als JSONObject.
+     * @return String der die ISO-639-1 Codierung einer Sprache speichert.
+     */
     public String getLanguage(JSONObject tweet) throws ParseException
     {
         return (String) tweet.get("lang");
@@ -143,6 +153,5 @@ public class Parser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

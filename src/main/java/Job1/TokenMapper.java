@@ -1,3 +1,5 @@
+package Job1;
+
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -39,7 +41,7 @@ public class TokenMapper extends Mapper<Object, Text, Text, IntWritable> {
     }
 
     /*
-     * Holt die relevanten Information aus dem JSONFile mithilfe eines Parser.
+     * Holt die relevanten Information aus dem JSONFile mithilfe eines Job1.Parser.
      * @param value Ein Tweet als Text.
      */
     private void getInformation(Text value)

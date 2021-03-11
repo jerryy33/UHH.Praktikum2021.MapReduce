@@ -1,10 +1,10 @@
+package Job2;
+
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+
 
 // Mapper <Input Key, Input Value, Output Key, Output Value>
 public class TokenMapper1 extends Mapper<Text, IntWritable, Text, IntWritable> {
