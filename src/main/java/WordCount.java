@@ -47,8 +47,26 @@ public class WordCount {
         FileInputFormat.addInputPath(job1, new Path (args[1] + "/output"));
         FileOutputFormat.setOutputPath(job1, new Path(args[1]+ "/output1"));
 
+        job1.waitForCompletion(true);
+
+        //Job3: Wordcount für hashtag#date
+        Configuration conf2 = new Configuration();
+        Job job2 = Job.getInstance(conf2,"hashtagDateCount");
+
+        job2.setJarByClass(WordCount.class);
+        job2.setMapperClass(TokenMapper2.class);
+        job2.setCombinerClass(SumReducer2.class);
+        job2.setReducerClass(SumReducer2.class);
+
+        job2.setOutputKeyClass(Text.class);
+        job2.setOutputValueClass(IntWritable.class);
+
+        job2.setInputFormatClass(SequenceFileInputFormat.class);
+        FileInputFormat.addInputPath(job2, new Path (args[1] + "/output"));
+        FileOutputFormat.setOutputPath(job2, new Path(args[1]+ "/output2"));
+
         //Exit
-        System.exit(job1.waitForCompletion(true) ? 0 : 1);
+        System.exit(job2.waitForCompletion(true) ? 0 : 1);
 
     }
 }
