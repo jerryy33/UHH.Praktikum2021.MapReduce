@@ -16,7 +16,7 @@ User than can search for hashtags to find alle tweets which are using the specif
 
 This Projekt handles this problem and tries to visualize the meaning and context of different hashtags. Based on tweets of the year 2020 we show all words which are mostly used with a specific hashtag.
 
-Visit LINK to try it yourself.
+Visit http://basecamp-demos.informatik.uni-hamburg.de:8080/hashtag-analyse-1/dashboard to try it yourself.
 
 ### German:
 Seit Ihrer Einführung sind Hashtags zu einem wichtigen Bestandteil, der weltweiten Social-Media-Plattform geworden und befinden sich heutzutage in fast allen Beiträgen
@@ -30,7 +30,7 @@ Genau mit dieser Problematik setzt sich dieses Projekt auseinander. Basierend au
 2020 liefern wir Ihnen alle Wörter, die in Verbindung mit den meist eingesetzten 100 Hashtags aus diesem Zeitraum aufgetaucht sind. 
 Dadurch soll die Bedeutung von den Hashtags, anhand der Wörtern zu identifiziert werden, mit denen sie am öftesten erschienen sind. 
 Somit können Sie auf einen der Hashtags klicken und es werden Ihnen die Wörter aufgelistet, die in dem Zeitraum prozentual am häufigsten in Verbindung mit dem Hashtag aufgetaucht sind.
-Auf unser Website kann die super auprobiert werden LINK.
+Auf unser Website kann dies auprobiert werden http://basecamp-demos.informatik.uni-hamburg.de:8080/hashtag-analyse-1/dashboard.
 
 ## Technologies
 * Java 
