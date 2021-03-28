@@ -34,13 +34,14 @@ Auf unser Website kann dies auprobiert werden [Demo](http://basecamp-demos.infor
 
 ## Technologies
 * [Java 8](https://www.java.com/download/help/java8.html)
-* [Maven Version: 3.6.3](https://maven.apache.org/download.cgi)
-* [Hadoop Version: 3.2.1](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/release/3.2.1/RELEASENOTES.3.2.1.html)
-* [JSON Simple Version: 1.1.1](https://code.google.com/archive/p/json-simple/)
+* [Maven 3.6.3](https://maven.apache.org/download.cgi)
+* [Hadoop 3.2.1](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/release/3.2.1/RELEASENOTES.3.2.1.html)
+* [JSON Simple 1.1.1](https://code.google.com/archive/p/json-simple/)
+* [JUnit 4.1](https://junit.org/junit4/)
 
 ## Setup
 First you need to scrape data from Twitter so you can execute map-reduce on this data.
-Using Hadoop(http://hadoop.apache.org/) this Projekt can be executed to get the necassary data.
+Using Hadoop(http://hadoop.apache.org/) this Projekt can be executed to get the necassary data. Open the projekt in any IDE and build the project using [Maven](https://maven.apache.org/), make sure you have all the correct versions installed (see [Technologies](#technologies)). This should give you a jar file which you can than use to execute map-reduce on your data via hadoop. For example you can use the command: hadoop jar yourJar path/to/your/data outputFolder. This is gonna execute all 3 Jobs automatically for you, mak sure you dont loose connection to the server otherwise only the first Job will come through. [Screen](https://wiki.ubuntuusers.de/Screen/) is very usefull for this. 
 
 
 ## Status
@@ -50,4 +51,5 @@ Project is: finished
   https://github.com/basecamp-uhh/Java-MapReduce
   
 ## Contact  
+jeremy.herbst@studium.uni-hamburg.de
   
