@@ -1,5 +1,5 @@
 # Hashtag Analysis
-  Using Map-Reduce this Project is analysing Hashtags from Twitter.
+  Using [Map-Reduce](https://en.wikipedia.org/wiki/MapReduce) this Project is analysing Hashtags from Twitter. See [here](https://github.com/Deischox/Praktikum2021) for the Frontend
 
 ## Table of contents
 * [General info](#general-info)
@@ -14,7 +14,7 @@
 Since hashtags have been introduced they are a key faktor for social media plattforms such as Twitter. Hashtags are used as keywords, many users use hashtags to describe their tweet in one short description. This categorizes tweets and tweets can be found faster becuase of that.
 User than can search for hashtags to find alle tweets which are using the specified hashtag. Every person with a socialmedia profile can create a hashtag, over time a lot of hashtags have been created, some more popular than others. Many of them dont have a clear meaning at first look, the reason for this is that hashtags are mostly used as abbreviations (e.g. blm stands for BlackLivesMatter).
 
-This Projekt handles this problem and tries to visualize the meaning and context of different hashtags. Based on tweets of the year 2020 we show all words which are mostly used with a specific hashtag.
+This Projekt handles this problem and tries to visualize(see [Frontend](https://github.com/Deischox/Praktikum2021) for more info) the meaning and context of different hashtags. Based on tweets of the year 2020 we show all words which are mostly used with a specific hashtag.
 
 Visit [Demo](http://basecamp-demos.informatik.uni-hamburg.de:8080/hashtag-analyse-1/dashboard) to try it yourself.
 
@@ -41,11 +41,10 @@ Auf unser Website kann dies auprobiert werden [Demo](http://basecamp-demos.infor
 
 ## Setup
 First you need to scrape data from Twitter so you can execute map-reduce on this data.
-Using Hadoop(http://hadoop.apache.org/) this Projekt can be executed to get the necassary data. Open the projekt in any IDE and build the project using [Maven](https://maven.apache.org/), make sure you have all the correct versions installed (see [Technologies](#technologies)). This should give you a jar file which you can than use to execute map-reduce on your data via hadoop. For example you can use the command: hadoop jar yourJar path/to/your/data outputFolder. This is gonna execute all 3 Jobs automatically for you, mak sure you dont loose connection to the server otherwise only the first Job will come through. [Screen](https://wiki.ubuntuusers.de/Screen/) is very usefull for this. 
-
+Using Hadoop(http://hadoop.apache.org/) this Projekt can be executed to get the necassary data. Open the projekt in any IDE and build the project using [Maven](https://maven.apache.org/), make sure you have all the correct versions installed (see [Technologies](#technologies)). This should give you a jar file which you can than use to execute map-reduce on your data via hadoop. For example you can use the command: hadoop jar yourJar path/to/your/data outputFolder. This is gonna execute all 3 Jobs automatically for you, mak sure you dont loose connection to the server otherwise only the first Job will come through. [Screen](https://wiki.ubuntuusers.de/Screen/) is very useful for this. 
 
 ## Status
-Project is: finished
+Project is finished
 
 ## Inspiration
   https://github.com/basecamp-uhh/Java-MapReduce
