@@ -16,7 +16,7 @@ User than can search for hashtags to find alle tweets which are using the specif
 
 This Projekt handles this problem and tries to visualize the meaning and context of different hashtags. Based on tweets of the year 2020 we show all words which are mostly used with a specific hashtag.
 
-Visit http://basecamp-demos.informatik.uni-hamburg.de:8080/hashtag-analyse-1/dashboard to try it yourself.
+Visit [Demo](http://basecamp-demos.informatik.uni-hamburg.de:8080/hashtag-analyse-1/dashboard) to try it yourself.
 
 ### German:
 Seit Ihrer Einführung sind Hashtags zu einem wichtigen Bestandteil, der weltweiten Social-Media-Plattform geworden und befinden sich heutzutage in fast allen Beiträgen
@@ -30,16 +30,13 @@ Genau mit dieser Problematik setzt sich dieses Projekt auseinander. Basierend au
 2020 liefern wir Ihnen alle Wörter, die in Verbindung mit den meist eingesetzten 100 Hashtags aus diesem Zeitraum aufgetaucht sind. 
 Dadurch soll die Bedeutung von den Hashtags, anhand der Wörtern zu identifiziert werden, mit denen sie am öftesten erschienen sind. 
 Somit können Sie auf einen der Hashtags klicken und es werden Ihnen die Wörter aufgelistet, die in dem Zeitraum prozentual am häufigsten in Verbindung mit dem Hashtag aufgetaucht sind.
-Auf unser Website kann dies auprobiert werden http://basecamp-demos.informatik.uni-hamburg.de:8080/hashtag-analyse-1/dashboard.
+Auf unser Website kann dies auprobiert werden [Demo](http://basecamp-demos.informatik.uni-hamburg.de:8080/hashtag-analyse-1/dashboard).
 
 ## Technologies
-* Java 
-* Maven
-* Hadoop
-* MYSQL
-* CSS
-* Javascript
-* HTML
+* [Java 8](https://www.java.com/download/help/java8.html)
+* [Maven Version: 3.6.3](https://maven.apache.org/download.cgi)
+* [Hadoop Version: 3.2.1](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/release/3.2.1/RELEASENOTES.3.2.1.html)
+* [JSON Simple Version: 1.1.1](https://code.google.com/archive/p/json-simple/)
 
 ## Setup
 First you need to scrape data from Twitter so you can execute map-reduce on this data.
@@ -51,3 +48,6 @@ Project is: finished
 
 ## Inspiration
   https://github.com/basecamp-uhh/Java-MapReduce
+  
+## Contact  
+  
