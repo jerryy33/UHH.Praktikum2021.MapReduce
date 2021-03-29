@@ -1,5 +1,4 @@
 package Job1;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -12,53 +11,93 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/*
-* Die Klasse holt relevante Informationen aus einem Tweet, um ihn dann für das Map-Reduce zu nutzen.
-* */
-public class Parser {
+/**
+ * This class is used to extract Information from a tweet, which is needed for the map-reduce in
+ * Job1
+ * @author Jeremy
+ * @author Selen
+ * @version 2.0
+ */
+public class Parser
+{
 
-
-    // Eine Liste in der die Englischen stopwords gespeichert werden
+    // List for english stopwords
     private List<String> stopwords_eng;
 
-    //Eine Liste in der die Deutschen stopwords gespeichert werden
+    //List for german stopwords
     private List<String> stopwords_ger;
 
-    //Eine Liste in der die Spanische stopwords gespeichert werden
+    //List for spanish stopwords
     private List<String> stopwords_es;
 
-    /*
-     * Extrahiert das Datum aus einem JSONObject
-     * @param tweet Ein kompletter Tweet als JSONObject.
-     * @return String Monat + Tag + Jahr
+    // Language of the tweet
+    private String language = "";
+
+    /**
+     * Constructor which reads stopwords lists in so they can be used instantly.
+     */
+    public Parser()
+    {
+        makeEnglishStopwordList();
+        makeSpanishStopwordLists();
+        makeGermanStopwordList();
+    }
+    /**
+     * Gets the date where the tweet is created
+     * @param tweet the JSONObject that is exactly one tweet
+     * @return Month + Day + Year
+     * @throws ParseException If a parse Exception occurred
+     * @require tweet != null
+     * @require tweet.containsKey("created_at") == true
+     * @ensure result != null && !result.equals("")
      */
     public String getDate(JSONObject tweet) throws ParseException
     {
-        String date = (String) tweet.get("created_at");
-        String [] einheiten = date.split("\\s+");
+        assert tweet != null:"Precondition injured: tweet != null";
+        assert tweet.containsKey("created_at") :
+                "Precondition injured: tweet.containsKey(\"created_at\") == true";
 
-        return einheiten[1] + einheiten[2] +einheiten[5];
+        String date = (String) tweet.get("created_at");
+        String [] units = date.split("\\s+");
+
+        return units[1] + units[2] + units[5];
     }
 
-    /*
-     * Extrahiert die angegebene Sprache aus dem JSONObject
-     * @param tweet Ein kompletter Tweet als JSONObject.
-     * @return String der die ISO-639-1 Codierung einer Sprache speichert.
+    /**
+     * Extracts the machine determined language of exactly one tweet
+     * @param tweet the JSONObject that is exactly one tweet
+     * @return String which has the ISO-639-1 coding for a language
+     * @throws ParseException If a parse Exception occurred
+     * @require tweet != null
+     * @require tweet.containsKey("created_at") == true
+     * @ensure result != null && !result.equals("")
      */
     public String getLanguage(JSONObject tweet) throws ParseException
     {
-        return (String) tweet.get("lang");
+        assert tweet != null:"Precondition injured: tweet != null";
+        assert tweet.containsKey("created_at") :
+                "Precondition injured: tweet.containsKey(\"created_at\") == true";
+
+        language = (String) tweet.get("lang");
+        return language;
     }
 
-    /*
-    * Extrahiert die Hashtags aus dem JSON Object.
-    * @param tweet Ein kompletter Tweet als JSONObject.
-    * @return hashtagList Liste die alle Hashtags beinhaltet.
-    */
+    /**
+     * Extracts the hashtags from exactly one tweet
+     * @param tweet the JSONObject that is exactly one tweet
+     * @return hashtagList List which contains all hashtags
+     * @throws ParseException If a parse Exception occurred
+     * @require tweet != null
+     * @require tweet.containsKey("created_at") == true
+     * @ensure hashtagList != null
+     */
     public LinkedList<String> getHashtags (JSONObject tweet) throws ParseException
     {
-        LinkedList<String> hashtagsList = new LinkedList<>();
+        assert tweet != null:"Precondition injured: tweet != null";
+        assert tweet.containsKey("created_at") :
+                "Precondition injured: tweet.containsKey(\"created_at\") == true";
 
+        LinkedList<String> hashtagsList = new LinkedList<>();
         JSONObject ent = (JSONObject) tweet.get("entities");
         JSONArray hash = (JSONArray) ent.get("hashtags");
 
@@ -76,17 +115,25 @@ public class Parser {
         return hashtagsList;
     }
 
-    /* Extrahiert den Text, der in einem Tweet vorkommt aus einem JSONObject und tut jedes Wort in eine Liste.
-     * Dabei wird der Text "gecleant".
-     * @param tweet Ein JSONObject welches ein Tweet beinhaltet.
-     * @return textList Eine Liste die alle Wörter beinhaltet.
+    /** Extracts the actual text from exactly one tweet, during this only useful words will be
+     * extracted. All words will be in lower Case
+     * @param tweet the JSONObject that is exactly one tweet
+     * @return textList List which contains all useful words from the original text
+     * @throws ParseException If a parse Exception occurred
+     * @require tweet != null
+     * @require tweet.containsKey("created_at") == true
+     * @ensure textList != null
      */
     public LinkedList<String> getText(JSONObject tweet) throws ParseException
     {
+        assert tweet != null:"Precondition injured: tweet != null";
+        assert tweet.containsKey("created_at") :
+                "Precondition injured: tweet.containsKey(\"created_at\") == true";
+
         LinkedList<String> textList = new LinkedList<>();
 
-        String t = (String) tweet.get("text");
-        String cleanText = cleanText(t.toLowerCase(Locale.ROOT));
+        String text = (String) tweet.get("text");
+        String cleanText = cleanText(text.toLowerCase(Locale.ROOT));
         StringTokenizer itr = new StringTokenizer(cleanText);
         while (itr.hasMoreTokens())
         {
@@ -94,64 +141,129 @@ public class Parser {
         }
         return textList;
     }
-    /*
-     * Hilfsmethode die den Text von nicht inhaltlich wichtigen Wörtern befreit.
-     * @param t Der Text als String der gecleant werden soll
-     * @return s.replaceAll String der keine Hashtags und stopwords enthält.
+    /**
+     * Cleans the original text, so only useful and meaningful words remain. During this Links,
+     * words with # in it and stopwords will be removed
+     * @param text The actual text of a tweet
+     * @return result String that doesn't contain any of the mentioned objects above
+     * @require text != null
      */
-    private String cleanText(String t) {
-        String s = removeAllStopWords(t.toLowerCase(Locale.ROOT));
+    private String cleanText(String text)
+    {
+        assert text != null:"Precondition injured: text != null";
+
+        String s = removeAllStopWords(text.toLowerCase(Locale.ROOT));
         String r = s.replaceAll("[\\S]+://[\\S]+", "");
         return r.replaceAll("#[^\\s]+", "");
     }
 
-    /*
-     * Entfernt alle sogenannten stopwords aus unserem Twitter-Textfeld. Berücksichtigte Sprachen(Deutsch, Englisch).
-     * @param t Ein String der den Text enthält.
-     * @return String Der Text als String allerdings ohne die stopwords.
+    /**
+     * Removes all stopwords @{https://en.wikipedia.org/wiki/Stop_word)} from a String
+     * @param text String which is a tweet-text
+     * @return result original string without stopwords
+     * @require text != null
      */
-    public String removeAllStopWords(String t)
+    public String removeAllStopWords(String text)
     {
-        makeStopwordLists();
-        ArrayList<String> allWords = Stream.of(t.split(" ")).collect(Collectors.toCollection
+        assert text != null:"Precondition injured: text != null";
+
+        ArrayList<String> allWords = Stream.of(text.split(" ")).collect(Collectors.toCollection
                 (ArrayList<String>::new));
 
-        stopwords_eng.removeAll(Collections.singleton(null));
-        allWords.removeAll(stopwords_eng);
+        if(language.equals("en"))
+        {
+            stopwords_eng.removeAll(Collections.singleton(null));
+            allWords.removeAll(stopwords_eng);
+        }
+        if(language.equals("es"))
+        {
+            stopwords_es.removeAll(Collections.singleton(null));
+            allWords.removeAll(stopwords_es);
+        }
+        if(language.equals("de"))
+        {
+            stopwords_ger.removeAll(Collections.singleton(null));
+            allWords.removeAll(stopwords_ger);
+        }
 
-        stopwords_es.removeAll(Collections.singleton(null));
-        allWords.removeAll(stopwords_es);
-
-        stopwords_ger.removeAll(Collections.singleton(null));
-        allWords.removeAll(stopwords_ger);
         return allWords.stream().collect(Collectors.joining(" "));
     }
 
-    /*
-     * Liest die stopwords Files ein und speichert sie in einer Liste.
-    */
-    private void makeStopwordLists()
+    /**
+     * Puts all spanish stopwords in a list
+     */
+    private void makeSpanishStopwordLists()
     {
-        String path_eng = "/english_stopwords";
-        try (InputStream resource = Parser.class.getResourceAsStream(path_eng)) {
-            stopwords_eng = new BufferedReader(new InputStreamReader(resource,
-                    StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String path_ger = "/german_stopwords";
-        try (InputStream resource = Parser.class.getResourceAsStream(path_ger)) {
-            stopwords_ger = new BufferedReader(new InputStreamReader(resource,
-                    StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         String path_es = "/spanish_stopwords";
-        try (InputStream resource = Parser.class.getResourceAsStream(path_es)) {
+        try (InputStream resource = Parser.class.getResourceAsStream(path_es))
+        {
             stopwords_es = new BufferedReader(new InputStreamReader(resource,
                     StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Puts all english stopwords in a list
+     */
+    private void makeEnglishStopwordList()
+    {
+        String path_eng = "/english_stopwords";
+        try (InputStream resource = Parser.class.getResourceAsStream(path_eng))
+        {
+            stopwords_eng = new BufferedReader(new InputStreamReader(resource,
+                    StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Puts all german stopwords in a list
+     */
+    private void makeGermanStopwordList()
+    {
+        String path_ger = "/german_stopwords";
+        try (InputStream resource = Parser.class.getResourceAsStream(path_ger))
+        {
+            stopwords_ger = new BufferedReader(new InputStreamReader(resource,
+                    StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Getter Method for english stopwords list
+     * @return List of all english stopwords
+     */
+    public List<String> getEnglishStopwordList()
+    {
+        return stopwords_eng;
+    }
+
+    /**
+     * Getter Method for spanish stopwords list
+     * @return list of all spanish stopwords
+     */
+    public List<String> getSpanishStopwordList()
+    {
+        return stopwords_es;
+    }
+
+    /**
+     * Getter Method for german stopwords list
+     * @return List of all german stopwords
+     */
+    public List<String> getGermanStopwordList()
+    {
+        return stopwords_ger;
     }
 }

@@ -14,11 +14,24 @@ import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 
-public class WordCount {
+/**
+ * Main class which is responsible for executing the MapReduce jobs
+ * @author Eugen Ruppert
+ * @author Jeremy
+ * @version 3.0
+ */
+public class WordCount
+{
 
+    /**
+     * Starts the jobs in a specific order (job2 and job3 have to wait for job1 and than can be
+     * started parallel)
+     * @param args Input and Output
+     * @throws Exception If an Exception occurs
+     */
     public static void main(String[] args) throws Exception {
 
-        //Job1: Wordcount für hashtag#wort#lang#date
+        //Job1: wordcount for hashtag#wort#lang#date
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "wordcount");
 
@@ -34,10 +47,10 @@ public class WordCount {
         FileInputFormat.addInputPath(job,new Path(args[0]));
         FileOutputFormat.setOutputPath(job,new Path(args[1]+"/output"));
 
-        // Zweiter job muss auf den ersten warten.
+        // Second job needs to wait for the first one
         job.waitForCompletion(true);
 
-        //Job2: Wordcount für hashtag#wort
+        //Job2: wordcount for hashtag#wort
         Configuration conf1 = new Configuration();
         Job job1 = Job.getInstance(conf1,"hashtagWordCount");
 
@@ -53,7 +66,7 @@ public class WordCount {
         FileInputFormat.addInputPath(job1, new Path (args[1] + "/output"));
         FileOutputFormat.setOutputPath(job1, new Path(args[1]+ "/output1"));
 
-        //Job3: Wordcount für hashtag#date
+        //Job3: wordcount for hashtag#date
         Configuration conf2 = new Configuration();
         Job job2 = Job.getInstance(conf2,"hashtagDateCount");
 
@@ -71,7 +84,6 @@ public class WordCount {
 
         //Exit
         System.exit(job2.waitForCompletion(true) ? 0 : 1);
-
     }
 }
 
