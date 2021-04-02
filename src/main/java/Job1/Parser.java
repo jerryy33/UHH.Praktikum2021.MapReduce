@@ -158,7 +158,7 @@ public class Parser
     }
 
     /**
-     * Removes all stopwords @{https://en.wikipedia.org/wiki/Stop_word)} from a String
+     * Removes all stopwords from a String
      * @param text String which is a tweet-text
      * @return result original string without stopwords
      * @require text != null

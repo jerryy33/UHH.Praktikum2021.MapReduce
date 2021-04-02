@@ -47,7 +47,7 @@ public class WordCount
         FileInputFormat.addInputPath(job,new Path(args[0]));
         FileOutputFormat.setOutputPath(job,new Path(args[1]+"/output"));
 
-        // Second job needs to wait for the first one
+        // Second and Third job need to wait for the first one
         job.waitForCompletion(true);
 
         //Job2: wordcount for hashtag#wort
@@ -66,6 +66,8 @@ public class WordCount
         FileInputFormat.addInputPath(job1, new Path (args[1] + "/output"));
         FileOutputFormat.setOutputPath(job1, new Path(args[1]+ "/output1"));
 
+        job1.waitForCompletion(true);
+
         //Job3: wordcount for hashtag#date
         Configuration conf2 = new Configuration();
         Job job2 = Job.getInstance(conf2,"hashtagDateCount");
@@ -79,8 +81,8 @@ public class WordCount
         job2.setOutputValueClass(IntWritable.class);
 
         job2.setInputFormatClass(SequenceFileInputFormat.class);
-        FileInputFormat.addInputPath(job2, new Path (args[1] + "/output3"));
-        FileOutputFormat.setOutputPath(job2, new Path(args[1]+ "/output4"));
+        FileInputFormat.addInputPath(job2, new Path (args[1] + "/output"));
+        FileOutputFormat.setOutputPath(job2, new Path(args[1]+ "/output2"));
 
         //Exit
         System.exit(job2.waitForCompletion(true) ? 0 : 1);
