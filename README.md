@@ -1,8 +1,9 @@
 # Hashtag Analysis
-Using [Map-Reduce](https://en.wikipedia.org/wiki/MapReduce) this Project is analysing Hashtags from Twitter. See [here](https://github.com/Deischox/Praktikum2021) for the Frontend
+Using [Map-Reduce](https://en.wikipedia.org/wiki/MapReduce) this Project is analysing Hashtags from Twitter. See [here](https://github.com/Deischox/Praktikum2021) for the Frontend and [here](https://jerryy33.github.io/UHH.Praktikum2021.MapReduce/apidocs/) for Javadocs
 
 ## Table of contents
 * [General info](#general-info)
+* [Screenshots](#screenshots)
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Status](#status)
@@ -37,7 +38,7 @@ Auf unser Website kann dies auprobiert werden [Demo](http://basecamp-demos.infor
 * [Maven 3.6.3](https://maven.apache.org/download.cgi)
 * [Hadoop 3.2.1](https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/release/3.2.1/RELEASENOTES.3.2.1.html)
 * [JSON Simple 1.1.1](https://code.google.com/archive/p/json-simple/)
-* [JUnit 4.1](https://junit.org/junit4/)
+* [JUnit 4.13.2](https://junit.org/junit4/)
 
 ## Setup
 First you need to scrape data from Twitter, so you can execute map-reduce on this data.
