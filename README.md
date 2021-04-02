@@ -34,7 +34,7 @@ Somit können Sie auf einen der Hashtags klicken und es werden Ihnen die Wörter
 Auf unser Website kann dies auprobiert werden [Demo](http://basecamp-demos.informatik.uni-hamburg.de:8080/hashtag-analyse-1/dashboard).
 
 ## Screenshots
-To get a overview what this projekt generates:
+To get a overview what this project generates:
 
 Output Job1:
 
