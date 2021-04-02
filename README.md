@@ -33,6 +33,8 @@ Dadurch soll die Bedeutung von den Hashtags, anhand der Wörtern zu identifizier
 Somit können Sie auf einen der Hashtags klicken und es werden Ihnen die Wörter aufgelistet, die in dem Zeitraum prozentual am häufigsten in Verbindung mit dem Hashtag aufgetaucht sind.
 Auf unser Website kann dies auprobiert werden [Demo](http://basecamp-demos.informatik.uni-hamburg.de:8080/hashtag-analyse-1/dashboard).
 
+## Screenshots
+
 ## Technologies
 * [Java 8](https://www.java.com/download/help/java8.html)
 * [Maven 3.6.3](https://maven.apache.org/download.cgi)
