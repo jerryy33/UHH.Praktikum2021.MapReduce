@@ -34,6 +34,10 @@ Somit können Sie auf einen der Hashtags klicken und es werden Ihnen die Wörter
 Auf unser Website kann dies auprobiert werden [Demo](http://basecamp-demos.informatik.uni-hamburg.de:8080/hashtag-analyse-1/dashboard).
 
 ## Screenshots
+Um einen Üerblick zu bekommen was dieses Projekt generiert:
+[Job1](./images/alleAttribute_wordcount.png)
+[Job2](./images/Top15_Hashtag.Wort.png)
+[Job3](./images/Top15_Hashtag.Datum.png)
 
 ## Technologies
 * [Java 8](https://www.java.com/download/help/java8.html)
