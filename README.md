@@ -37,14 +37,17 @@ Auf unser Website kann dies auprobiert werden [Demo](http://basecamp-demos.infor
 Um einen Üerblick zu bekommen was dieses Projekt generiert:
 
 Output Job1:
+
 ![Job1](./images/alleAttribute_wordcount.png)
 
 
 Output Job2:
+
 ![Job2](./images/Top15_Hashtag.Wort.png)
 
 
 Output Job3:
+
 ![Job3](./images/Top15_Hashtag.Datum.png)
 
 ## Technologies
