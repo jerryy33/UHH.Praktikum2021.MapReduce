@@ -58,7 +58,7 @@ Output Job3:
 * [JUnit 4.13.2](https://junit.org/junit4/)
 
 ## Setup
-First you need to scrape data from Twitter, so you can execute map-reduce on this data, you can find more on this on the [Twitter Api](https://developer.twitter.com/en/docs/getting-started)
+First you need to scrape data from Twitter, so you can execute map-reduce on this data, you can find more on this on the [Twitter Api](https://developer.twitter.com/en/docs/getting-started).
 Using [Hadoop](http://hadoop.apache.org/) this Project can be executed to get the necessary data. Open the project in any IDE and build the project using [Maven](https://maven.apache.org/), make sure you have all the correct versions installed (see [Technologies](#technologies)). Executing the maven lifecycle should give you a jar file which you can use to execute map-reduce on your data via hadoop. For example you can use the command: hadoop jar yourJar path/to/your/data outputFolder. This is going to execute all 3 Jobs automatically for you, mak sure you don't loose connection to the server otherwise only the first Job will come through. [Screen](https://wiki.ubuntuusers.de/Screen/) is very useful for this.
 
 ## Status
